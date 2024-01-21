@@ -49,11 +49,19 @@ public class LionTest {
     }
 
     @Test
-    public void testGetKittens() throws Exception {
-        Lion lion = new Lion(sex, predator);
-        Lion mockedLion = Mockito.mock(Lion.class);
-        when(mockedLion.getKittens()).thenReturn(predator.getKittens());
-        assertEquals(lion.getKittens(), predator.getKittens());
+    public void getKittens() throws Exception {
+        Predator mockedPredator = Mockito.mock(Predator.class);
+        when(mockedPredator.getKittens()).thenReturn(2);
+        Lion lion = new Lion(sex, mockedPredator);
+        assertEquals(2, lion.getKittens());
+    }
+
+    @Test
+    public void getFood() throws Exception {
+        Predator mockPredator = Mockito.mock(Predator.class);
+        when(mockPredator.eatMeat()).thenReturn(Arrays.asList("Животные", "Птицы", "Рыба"));
+        Lion lion = new Lion(sex, mockPredator);
+        assertEquals(Arrays.asList("Животные", "Птицы", "Рыба"), lion.getFood());
     }
 
 }

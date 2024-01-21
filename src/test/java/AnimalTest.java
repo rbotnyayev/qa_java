@@ -7,11 +7,11 @@ import org.mockito.Mockito;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
+//Тест данного класса был создан вне условий задания, по моей инициативе, для получения доп практики.
 @RunWith(Parameterized.class)
 public class AnimalTest {
 
@@ -23,7 +23,7 @@ public class AnimalTest {
         this.expectedFood = expectedFood;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters //Параметризовал значения типа животного и ожидаемого списка пищи для конкретного типа
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                 {"Травоядное", List.of("Трава", "Различные растения")},
@@ -38,5 +38,19 @@ public class AnimalTest {
         when(mockedAnimal.getFood(animalKind)).thenReturn(expectedFood);
         List<String> actual = animal.getFood(animalKind);
         assertEquals(expectedFood, actual);
+    }
+
+    @Test(expected = Exception.class) //Проверка выброса исключения
+    public void testAnimalWithInvalidType() throws Exception {
+        Animal animal = new Animal(); //Создаю объект класса Животное
+        animal.getFood("Непонятный тип"); //Вызываю метод с непонятным типом, для проверки на выброс исключения
+    }
+
+    @Test
+    public void getFamilyTest(){
+        Animal mockedAnimal = Mockito.mock(Animal.class); //Создаю мок класса Животное
+        Animal animal = new Animal(); //Создаю объект класса Животное
+        when(mockedAnimal.getFamily()).thenReturn("Существует несколько семейств: заячьи, беличьи, мышиные, кошачьи, псовые, медвежьи, куньи");
+        assertEquals(animal.getFamily(), mockedAnimal.getFamily()); //Сравниваю значения оригинального объекта Животное и стаба
     }
 }
